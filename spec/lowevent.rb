@@ -2,8 +2,8 @@
 
 require 'observers'
 
-require_relative '../lib/low_event'
+require_relative '../lib/lowevent'
 
 RSpec.describe LowEvent do
-  subject(:low_event) { described_class.new }
+  subject(:lowevent) { described_class.new }
 end

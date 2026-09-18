@@ -2,11 +2,11 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in low_event.gemspec
+# Specify your gem's dependencies in lowevent.gemspec
 gemspec
 
 group :development do
-  gem 'low_type', path: '../low_type'
+  gem 'lowtype', path: '../lowtype'
   gem 'observers', path: '../observers'
   gem 'providers', path: '../providers'
 

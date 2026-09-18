@@ -1,4 +1,4 @@
-<a href="https://rubygems.org/gems/low_event" title="Install gem"><img src="https://badge.fury.io/rb/low_event.svg" alt="Gem version" height="18"></a>
+<a href="https://rubygems.org/gems/lowevent" title="Install gem"><img src="https://badge.fury.io/rb/lowevent.svg" alt="Gem version" height="18"></a>
 
 # LowEvent
 
@@ -67,7 +67,7 @@ LowEvent builds a tree of every event as it's occuring and every subsequent even
 
 ## Installation
 
-Add `gem 'low_event'` to your Gemfile then:
+Add `gem 'lowevent'` to your Gemfile then:
 ```
 bundle install
 ```

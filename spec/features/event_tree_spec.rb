@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../../lib/low_event'
+require_relative '../../lib/lowevent'
 require_relative '../fixtures/child_event'
 require_relative '../fixtures/parent_event'
 

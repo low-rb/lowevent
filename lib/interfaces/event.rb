@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'low_type'
+require 'lowtype'
 require 'observers'
 require_relative 'definable'
 require_relative '../support/value_object'
@@ -26,6 +26,7 @@ module Low
     attr_accessor :children
 
     # Subclass provides a key such as "self.class".
+    # Subclass defines default action or actions, but not both.
     def initialize(key:, action: nil, actions: [], children: [])
       @key = key
       @action = action

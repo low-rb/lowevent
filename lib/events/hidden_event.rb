@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'low_type'
+require 'lowtype'
 
 module Low
   module Events
