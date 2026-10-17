@@ -22,8 +22,6 @@ Gem::Specification.new do |spec|
   end
 
   spec.require_paths = ['lib']
-  spec.bindir = 'exe'
-  spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
 
   spec.add_dependency 'lowtype', '~> 1.4'
   spec.add_dependency 'observers'
