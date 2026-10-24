@@ -16,21 +16,27 @@ module Low
       def initialize
         @event_trees = Support::PoolHash.new(BUFFER_SIZE)
         @request_counts = Support::PoolHash.new(BUFFER_SIZE)
+        # Guards both pools, as requests can be handled on more than one thread (like Puma or Iodine with threads).
+        @mutex = Mutex.new
       end
 
       def current_event_tree(event:)
-        request_id = request_id(event:)
+        event_tree, created = @mutex.synchronize do
+          request_id = request_id(event:)
+          next [@event_trees[request_id], false] if @event_trees[request_id]
 
-        return @event_trees[request_id] if @event_trees[request_id]
+          [@event_trees.add(request_id, EventTree.new(request_id:)), true]
+        end
 
-        event_tree = @event_trees.add(request_id, EventTree.new(request_id:))
-        trigger action: :new_event_tree, event: event_tree
+        # Outside the lock, as observers can do anything (including create events).
+        trigger action: :new_event_tree, event: event_tree if created
 
         event_tree
       end
 
+      # A copy, so it can be iterated while event trees are added.
       def event_trees
-        @event_trees
+        @mutex.synchronize { @event_trees.dup }
       end
 
       private
