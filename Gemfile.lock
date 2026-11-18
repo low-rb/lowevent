@@ -1,16 +1,16 @@
 PATH
   remote: ../lowtype
   specs:
-    lowtype (1.6.0)
+    lowtype (1.7.0)
       dirload
       expressions (~> 0.1)
-      lowkey (~> 0.5)
-      trees
+      lowkey (>= 0.7.1)
+      trees (>= 0.4)
 
 PATH
   remote: ../observers
   specs:
-    observers (0.9.0)
+    observers (1.1.0)
 
 PATH
   remote: ../providers
@@ -21,7 +21,7 @@ PATH
 PATH
   remote: .
   specs:
-    lowevent (0.8.2)
+    lowevent (0.8.3)
       lowtype (~> 1.4)
       observers
       protocol-http
@@ -46,7 +46,7 @@ GEM
     language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
     logger (1.7.0)
-    lowkey (0.7.0)
+    lowkey (0.7.3)
       prism
     parallel (2.3.0)
     parser (3.3.13.0)
@@ -138,10 +138,10 @@ CHECKSUMS
   language_server-protocol (3.17.0.6) sha256=5ef2c0c138f8267e1bc631d3328347d354f96724b0af22f2c79516120443b7f0
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
-  lowevent (0.8.2)
-  lowkey (0.7.0) sha256=f058768d33ece32fe30690839b0f1cb80db2679b25617777cfd68301a951eebb
-  lowtype (1.6.0)
-  observers (0.9.0)
+  lowevent (0.8.3)
+  lowkey (0.7.3) sha256=22f2e84b109f5ecbdcbf47646147064996177f6d39b80c1932ce2ee39c351533
+  lowtype (1.7.0)
+  observers (1.1.0)
   parallel (2.3.0) sha256=f75a3e904101ce6a1ccb6b8dc800cbafd42166d83330192438dcf29395167a6f
   parser (3.3.13.0) sha256=e02f9b63c2fe05b0c68f692ba4df89b3cb113b663964f75d988fbebfd6c3deca
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
@@ -166,7 +166,7 @@ CHECKSUMS
   rubocop (1.92.1) sha256=a905381a5344215a79abcfe80f6c94366447e6a55347c9a525b5a24990e33f62
   rubocop-ast (1.50.0) sha256=b9ca88300da0803ee222ad20cdb30494c0a784eed06fdc35d254b06d662788db
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
-  trees (0.4.0)
+  trees (0.4.0) sha256=7ba5e7ff51475044fe8016220f147dd62af4ac90d45c9017cd194596c4357baf
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
   unicode-display_width (3.3.0) sha256=4b7aa66a4b11db50f6f7e98411215cd0dd10eaecb665d36eec5bcacb3fa0b613
   unicode-emoji (4.3.0) sha256=11c02fa73290378c066bb0562cd4c87d8e1b706fbbe0059ca12746a4244de8ce
