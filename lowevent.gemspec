@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'lowtype', '~> 1.4'
-  spec.add_dependency 'observers'
+  spec.add_dependency 'observers', '~> 1.1', '>= 1.1.1'
   spec.add_dependency 'protocol-http'
   spec.add_dependency 'providers'
 end

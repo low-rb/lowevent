@@ -10,7 +10,7 @@ PATH
 PATH
   remote: ../observers
   specs:
-    observers (1.1.0)
+    observers (1.1.1)
 
 PATH
   remote: ../providers
@@ -21,9 +21,9 @@ PATH
 PATH
   remote: .
   specs:
-    lowevent (0.8.3)
+    lowevent (0.8.4)
       lowtype (~> 1.4)
-      observers
+      observers (~> 1.1, >= 1.1.1)
       protocol-http
       providers
 
@@ -138,10 +138,10 @@ CHECKSUMS
   language_server-protocol (3.17.0.6) sha256=5ef2c0c138f8267e1bc631d3328347d354f96724b0af22f2c79516120443b7f0
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
-  lowevent (0.8.3)
+  lowevent (0.8.4)
   lowkey (0.7.3) sha256=22f2e84b109f5ecbdcbf47646147064996177f6d39b80c1932ce2ee39c351533
   lowtype (1.7.0)
-  observers (1.1.0)
+  observers (1.1.1)
   parallel (2.3.0) sha256=f75a3e904101ce6a1ccb6b8dc800cbafd42166d83330192438dcf29395167a6f
   parser (3.3.13.0) sha256=e02f9b63c2fe05b0c68f692ba4df89b3cb113b663964f75d988fbebfd6c3deca
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570

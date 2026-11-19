@@ -6,12 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Minor features that don't break backwards compatibility are released as patches.
 
 
-## Unreleased
+## 0.8.4
 
 ### Added
 
 - `define` puts observers in the order its block returns, so `observers = [MyLogger, *observers]` puts one first
 - A return action for events, like `RequestEvent`'s `response`, which each observer its take passed gets on the way back out, as `response(event:, result:)`, with the response it took, and can add to it, like a cookie
+
+### Changed
+
+- Need Observers 1.1.1, which reorders observers and passes a take's result back
+
 ## 0.8.3
 
 ### Added
