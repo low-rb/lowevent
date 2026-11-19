@@ -11,7 +11,8 @@ Minor features that don't break backwards compatibility are released as patches.
 ### Added
 
 - `define` puts observers in the order its block returns, so `observers = [MyLogger, *observers]` puts one first
-- `RequestEvent` passes itself back along its observers with the response it took, in `response_event`, to each with a `response` method, which can add to it, like a cookie
+- A return action for events, like `RequestEvent`'s `response`, which each observer its take passed gets on the way back out, as `response(event:, result:)`, with the response it took, and can add to it, like a cookie
+- `RequestEvent.current`, the request being answered, and its `store`, for what observers keep for the response's way out
 ## 0.8.3
 
 ### Added

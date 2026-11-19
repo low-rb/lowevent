@@ -22,15 +22,17 @@ module Low
     include Events::Definable
     include Support::ValueObject
 
-    attr_reader :key, :action, :actions, :created_at
+    attr_reader :key, :action, :actions, :return_action, :created_at
     attr_accessor :children
 
     # Subclass provides a key such as "self.class".
     # Subclass defines default action or actions, but not both.
-    def initialize(key:, action: nil, actions: [], children: [])
+    # A return action, like :response, is called on each observer a take passed, with what it took, on its way back out.
+    def initialize(key:, action: nil, actions: [], return_action: nil, children: [])
       @key = key
       @action = action
       @actions = actions
+      @return_action = return_action
       @children = children
 
       @created_at = Process.clock_gettime(Process::CLOCK_MONOTONIC, :millisecond)
@@ -45,7 +47,7 @@ module Low
     def take
       event_tree = branch
       key = Observers::Keys[@key]
-      key.take(event: self) { restore_level(event_tree:) }
+      key.take(event: self, returning: @return_action) { restore_level(event_tree:) }
     end
 
     def branch

@@ -4,23 +4,23 @@ require_relative '../interfaces/event'
 
 module Low
   module Events
+    # A request, which its first observer to respond answers. On the response's way back out, each observer it passed
+    # with a "response" method gets "response(event:, result:)", with the response it took, and can add to it.
     class RequestEvent < Event
-      attr_reader :request, :response_event
+      attr_reader :request, :store
 
       def initialize(request:, action: :request)
-        super(key: self.class, action:)
+        super(key: self.class, action:, return_action: :response)
 
         @request = request
+        @store = {} # What observers keep while the request's answered, for its way back out, like a cookie to set.
       end
 
-      # Takes the first observer's response, then passes the event back along its observers on the response's way out.
-      # Each with a "response" method gets it, with the response in "response_event", and can add to it, like a cookie.
-      def take
-        @response_event = super
-        Observers::Keys[@key].observers.each do |observer|
-          observer.object.response(event: self) if observer.object.respond_to?(:response)
+      class << self
+        # The RequestEvent being answered, for code deep in answering it, like a template, or nil outside a request.
+        def current
+          Providers['low.event.pool'].request_event
         end
-        @response_event
       end
     end
   end

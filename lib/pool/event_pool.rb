@@ -33,6 +33,12 @@ module Low
         @event_trees
       end
 
+      # The RequestEvent this fiber is responding to, which is its event tree's root.
+      def request_event
+        root_event = @event_trees[request_id(event: nil)]&.root_event
+        root_event if root_event.is_a?(RequestEvent)
+      end
+
       private
 
       def request_id(event:)
