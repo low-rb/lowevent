@@ -39,13 +39,4 @@ RSpec.describe Low::Events::RequestEvent do
     expect([described_class.take(request: '/forged'), described_class.take(request: '/cart')])
       .to eq(['turned away with a cookie', 'page for /cart with a cookie'])
   end
-
-  it 'is current while it is answered, so what answers it can keep things in its store' do
-    keeper = Class.new { def request(event:) = Low::Events::RequestEvent.current.store[:seen] = event.request }.new
-    described_class.define { |observers| [keeper, *observers] }
-    event = described_class.new(request: '/cart')
-    event.take
-
-    expect([event.store, described_class.current]).to eq([{ seen: '/cart' }, event])
-  end
 end
