@@ -33,7 +33,7 @@ RSpec.describe 'Nesting events' do
     root.trigger
     outer.trigger
 
-    expect([root.children, outer.children]).to eq([[outer], [inner]])
+    expect([root.children.map(&:key), outer.children.map(&:key)]).to eq([%i[outer], %i[inner]])
   end
 
   it 'puts an event that happens after one has finished under the first event' do
@@ -54,7 +54,8 @@ RSpec.describe 'Nesting events' do
       :done
     end
 
-    expect([result, root.children, recorded.children, recorded.milliseconds]).to match([:done, [recorded], [outer], be >= 0])
+    expect([result, root.children.map(&:key), recorded.children.map(&:key), recorded.milliseconds])
+      .to match([:done, %i[work], %i[outer], be >= 0])
   end
 
   it 'only runs the work when nothing is happening to record it under' do

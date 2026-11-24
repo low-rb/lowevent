@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Minor features that don't break backwards compatibility are released as patches.
 
 
+## 0.8.7
+
+### Added
+
+- `keep_apart { |event| ... }` keeps the trees whose first event the block picks in a buffer of their own of 20. A framework's own pages or an interval's ticks then never push the app's requests out and `event_trees` leaves them out
+
 ## 0.8.6
 
 ### Added
