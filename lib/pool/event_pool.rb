@@ -2,6 +2,7 @@
 
 require 'observers'
 
+require_relative 'action_rate'
 require_relative 'event_tree'
 require_relative '../support/pool_hash'
 
@@ -13,7 +14,11 @@ module Low
       BUFFER_SIZE = 100
       KEPT_APART_SIZE = 20
 
+      # The app's trees, and how many events run each second, however their tree is kept.
+      attr_reader :event_trees, :action_rate
+
       def initialize
+        @action_rate = ActionRate.new
         @event_trees = Support::PoolHash.new(BUFFER_SIZE)
         @kept_apart_trees = Support::PoolHash.new(KEPT_APART_SIZE)
         @request_counts = Support::PoolHash.new(BUFFER_SIZE)
@@ -43,10 +48,6 @@ module Low
       def event_tree_now
         fiber_id = Fiber.current.object_id
         find_event_tree("#{fiber_id}-#{@request_counts[fiber_id]}")
-      end
-
-      def event_trees
-        @event_trees
       end
 
       private

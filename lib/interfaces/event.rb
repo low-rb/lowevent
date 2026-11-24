@@ -83,9 +83,11 @@ module Low
     end
 
     # The event is the one happening while the block runs so events it causes go under it. Then the one before it is
-    # happening again or the first event when none was.
+    # happening again or the first event when none was. Each one counts towards the pool's action rate.
     def run_in_tree
-      event_tree = Providers['low.event.pool'].current_event_tree(event: self)
+      pool = Providers['low.event.pool']
+      pool.action_rate.count
+      event_tree = pool.current_event_tree(event: self)
       parent = event_tree.current_event
       event_tree.branch(event: self)
       event_tree.current_event = self
