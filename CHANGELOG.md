@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Minor features that don't break backwards compatibility are released as patches.
 
 
+## 0.8.5
+
+### Added
+
+- `StatusEvent.observers` lists what observes `Status` or a `Status[code]` as nodes observe those rather than the event
+
 ## 0.8.4
 
 ### Added
