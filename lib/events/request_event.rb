@@ -14,6 +14,10 @@ module Low
 
         @request = request
       end
+
+      def starts_event_tree?
+        true
+      end
     end
   end
 end

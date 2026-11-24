@@ -2,6 +2,7 @@
 
 require 'providers'
 
+require_relative 'events/node_event'
 require_relative 'events/render_event'
 require_relative 'events/request_event'
 require_relative 'events/response_event'

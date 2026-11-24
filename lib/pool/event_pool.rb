@@ -2,7 +2,6 @@
 
 require 'observers'
 
-require_relative '../events/request_event'
 require_relative 'event_tree'
 require_relative '../support/pool_hash'
 
@@ -29,6 +28,11 @@ module Low
         event_tree
       end
 
+      # The tree of what's happening now without starting one when nothing is.
+      def existing_event_tree(event:)
+        @event_trees[request_id(event:)]
+      end
+
       def event_trees
         @event_trees
       end
@@ -37,7 +41,7 @@ module Low
 
       def request_id(event:)
         fiber_id = Fiber.current.object_id
-        increment_request_counts(fiber_id:) if event.is_a?(RequestEvent)
+        increment_request_counts(fiber_id:) if event.starts_event_tree?
         "#{fiber_id}-#{@request_counts[fiber_id]}"
       end
 

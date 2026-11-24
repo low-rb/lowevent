@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Minor features that don't break backwards compatibility are released as patches.
 
 
+## 0.8.6
+
+### Added
+
+- `record { ... }` times work that isn't an observer like rendering a node or running a query. It joins the tree of the request or interval happening now with the events it causes under it and outside one it only runs the work
+- `NodeEvent` times a node rendering inside another. It holds the timing so `RenderEvent` stays immutable
+- `starts_event_tree?` says whether an event starts a tree of its own like a request
+
+### Fixed
+
+- An event triggered or taken by an observer goes under the event it observes and the event before it is current again once it's finished. Events after the first used to all go under the first so a tree didn't show what caused what
+
 ## 0.8.5
 
 ### Changed

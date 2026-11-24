@@ -40,19 +40,24 @@ module Low
     end
 
     def trigger
-      event_tree = branch
-      key = Observers::Keys[@key]
-      key.trigger(event: self) { restore_level(event_tree:) }
-    ensure
-      @finished_at = clock
+      run_in_tree { Observers::Keys[@key].trigger(event: self) }
     end
 
     def take
-      event_tree = branch
-      key = Observers::Keys[@key]
-      key.take(event: self, returning: @return_action) { restore_level(event_tree:) }
-    ensure
-      @finished_at = clock
+      run_in_tree { Observers::Keys[@key].take(event: self, returning: @return_action) }
+    end
+
+    # Times work that isn't an observer like rendering a node or running a query with the events it causes under it. It
+    # joins the tree of the request or interval happening now and outside one like a query at boot it only runs the work.
+    def record(&)
+      return yield unless Providers['low.event.pool'].existing_event_tree(event: self)
+
+      run_in_tree(&)
+    end
+
+    # Whether it starts a tree of its own rather than joining the one happening now like a request does.
+    def starts_event_tree?
+      false
     end
 
     # How long its observers took including the events they caused. It's nil until it's triggered or taken.
@@ -72,8 +77,17 @@ module Low
       Process.clock_gettime(Process::CLOCK_MONOTONIC, :float_millisecond)
     end
 
-    def restore_level(event_tree:)
-      event_tree.current_event = self if event_tree.respond_to?(:current_event)
+    # The event is the one happening while the block runs so events it causes go under it. Then the one before it is
+    # happening again or the first event when none was.
+    def run_in_tree
+      event_tree = Providers['low.event.pool'].current_event_tree(event: self)
+      parent = event_tree.current_event
+      event_tree.branch(event: self)
+      event_tree.current_event = self
+      yield
+    ensure
+      event_tree.current_event = parent || event_tree.root_event if event_tree
+      @finished_at = clock
     end
 
     class << self
