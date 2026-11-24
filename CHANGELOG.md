@@ -8,8 +8,13 @@ Minor features that don't break backwards compatibility are released as patches.
 
 ## 0.8.5
 
+### Changed
+
+- `created_at` counts fractions of a millisecond as most events take less than one
+
 ### Added
 
+- An event records `finished_at` when its trigger or take returns and `milliseconds` says how long that took including the events it caused
 - `StatusEvent.observers` lists what observes `Status` or a `Status[code]` as nodes observe those rather than the event
 
 ## 0.8.4

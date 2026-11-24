@@ -22,4 +22,14 @@ RSpec.describe Low::Event do
       end
     end
   end
+
+  describe '#milliseconds' do
+    it 'is nil until the event is triggered and then how long its observers took' do
+      event = MockEvent.new
+      before_trigger = event.milliseconds
+      event.trigger
+
+      expect([before_trigger, event.milliseconds]).to match([nil, be_a(Float).and(be >= 0)])
+    end
+  end
 end
