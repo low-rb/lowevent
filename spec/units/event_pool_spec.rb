@@ -33,6 +33,14 @@ RSpec.describe Low::Events::EventPool do
     expect(pool.event_trees.size).to eq(1)
   end
 
+  it "keeps an internal event's tree apart without a rule" do
+    tick = PooledEvent.new(key: :tick)
+    allow(tick).to receive(:internal?).and_return(true)
+    tick.trigger
+
+    expect(pool.event_trees).to be_empty
+  end
+
   it 'nests events under a tree kept apart' do
     pool.keep_apart { |event| event.key == :internal }
     root = PooledEvent.new(key: :internal)

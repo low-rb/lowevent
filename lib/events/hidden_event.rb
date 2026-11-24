@@ -16,17 +16,7 @@ module Low
         @created_at = Process.clock_gettime(Process::CLOCK_MONOTONIC, :millisecond)
       end
 
-      def trigger
-        event_tree = branch
-        key = Observers::Keys[@key]
-        key.trigger(event: self) { restore_level(event_tree:) }
-      end
-
       class << self
-        def trigger(**kwargs)
-          new(**kwargs).trigger
-        end
-
         def inherited(child)
           child.include LowType
         end

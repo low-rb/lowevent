@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Minor features that don't break backwards compatibility are released as patches.
 
 
+## 0.8.8
+
+### Added
+
+- `internal?` says whether an event's tree is kept apart from the app's like an interval's tick. The pool keeps it apart without a rule
+
+### Removed
+
+- `HiddenEvent#trigger` and `HiddenEvent.trigger` which called methods it didn't have and nothing used
+
 ## 0.8.7
 
 ### Added

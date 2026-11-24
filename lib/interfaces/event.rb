@@ -55,6 +55,11 @@ module Low
       run_in_tree(&)
     end
 
+    # Whether its tree is kept apart from the app's like an interval's tick. It's still recorded in a buffer of its own.
+    def internal?
+      false
+    end
+
     # Whether it starts a tree of its own rather than joining the one happening now like a request does.
     def starts_event_tree?
       false

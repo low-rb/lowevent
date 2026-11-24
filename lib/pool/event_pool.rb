@@ -20,8 +20,8 @@ module Low
         @kept_apart = nil
       end
 
-      # Trees whose first event the block picks are kept apart in a buffer of their own like a framework's own pages
-      # or an interval's ticks. They never push the app's requests out and event_trees leaves them out.
+      # Trees whose first event is internal or the block picks are kept apart in a buffer of their own like a framework's
+      # own pages. They never push the app's requests out and event_trees leaves them out.
       def keep_apart(&rule)
         @kept_apart = rule
       end
@@ -31,7 +31,7 @@ module Low
         existing = find_event_tree(request_id)
         return existing if existing
 
-        return @kept_apart_trees.add(request_id, EventTree.new(request_id:)) if @kept_apart&.call(event)
+        return @kept_apart_trees.add(request_id, EventTree.new(request_id:)) if kept_apart?(event)
 
         event_tree = @event_trees.add(request_id, EventTree.new(request_id:))
         trigger action: :new_event_tree, event: event_tree
@@ -49,6 +49,10 @@ module Low
       end
 
       private
+
+      def kept_apart?(event)
+        event.internal? || @kept_apart&.call(event)
+      end
 
       def find_event_tree(request_id)
         @event_trees[request_id] || @kept_apart_trees[request_id]
