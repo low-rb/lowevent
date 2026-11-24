@@ -41,6 +41,17 @@ RSpec.describe Low::Events::EventPool do
     expect(pool.event_trees).to be_empty
   end
 
+  it 'knows the tree being answered now on this fiber' do
+    answering = []
+    observer = Class.new { include Observers }
+    observer.define_singleton_method(:handle) { |event:| answering << [event, Providers['low.event.pool'].event_tree_now] }
+    observer.observe :app, action: :handle
+    PooledEvent.new(key: :app, action: :handle).trigger
+
+    event, tree = answering.first
+    expect(tree.root_event).to be(event)
+  end
+
   it 'nests events under a tree kept apart' do
     pool.keep_apart { |event| event.key == :internal }
     root = PooledEvent.new(key: :internal)

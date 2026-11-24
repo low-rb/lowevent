@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Minor features that don't break backwards compatibility are released as patches.
 
 
+## 0.8.9
+
+### Changed
+
+- `event_tree_now` gives the tree being answered on this fiber like the request being answered without starting one. It replaces `existing_event_tree(event:)`
+
 ## 0.8.8
 
 ### Added

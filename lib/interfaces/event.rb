@@ -50,7 +50,7 @@ module Low
     # Times work that isn't an observer like rendering a node or running a query with the events it causes under it. It
     # joins the tree of the request or interval happening now and outside one like a query at boot it only runs the work.
     def record(&)
-      return yield unless Providers['low.event.pool'].existing_event_tree(event: self)
+      return yield unless Providers['low.event.pool'].event_tree_now
 
       run_in_tree(&)
     end

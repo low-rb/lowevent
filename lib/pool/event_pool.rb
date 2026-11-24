@@ -39,9 +39,10 @@ module Low
         event_tree
       end
 
-      # The tree of what's happening now without starting one when nothing is.
-      def existing_event_tree(event:)
-        find_event_tree(request_id(event:))
+      # The tree of what's happening now on this fiber like the request being answered without starting one.
+      def event_tree_now
+        fiber_id = Fiber.current.object_id
+        find_event_tree("#{fiber_id}-#{@request_counts[fiber_id]}")
       end
 
       def event_trees
