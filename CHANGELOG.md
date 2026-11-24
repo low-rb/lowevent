@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Minor features that don't break backwards compatibility are released as patches.
 
 
+## 0.8.10
+
+### Added
+
+- `EventPool#action_rate` counts every event that runs each second, in every tree including those kept apart. `action_rate.per_second` averages the last minute
+
 ## 0.8.9
 
 ### Changed
