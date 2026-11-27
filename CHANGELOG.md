@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Minor features that don't break backwards compatibility are released as patches.
 
 
+## Unreleased
+
+### Changed
+
+- A tree only makes a branch event when something observes it, like the matrix's stream, rather than for every event
+
 ## 0.8.11
 
 ### Changed

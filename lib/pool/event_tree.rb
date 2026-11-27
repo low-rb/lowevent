@@ -28,7 +28,8 @@ module Low
           @current_event.children << event
         end
 
-        trigger action: :branch, event: BranchEvent.new(event_tree: self, event:)
+        # Only made when something observes the tree, like the matrix's stream, as most trees have no observers.
+        Observers::Keys.find(self)&.trigger(action: :branch, event: BranchEvent.new(event_tree: self, event:))
       end
     end
   end

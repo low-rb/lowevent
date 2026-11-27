@@ -37,4 +37,25 @@ RSpec.describe 'Event Tree' do
       end
     end
   end
+
+  describe 'a branch' do
+    let(:tree) { Low::Events::EventTree.new(request_id: 'branch-spec') }
+    let(:event) { ParentEvent.new(key: 'branch-spec') }
+
+    it "isn't made into a branch event when nothing observes the tree" do
+      allow(Low::Events::BranchEvent).to receive(:new).and_call_original
+      tree.branch(event:)
+
+      expect(Low::Events::BranchEvent).not_to have_received(:new)
+      expect(tree.root_event).to be(event)
+    end
+
+    it 'is given to what observes the tree' do
+      watcher = Class.new { def branch(event:) = (@branched ||= []) << event.event; attr_reader :branched }.new
+      tree.observers << watcher
+      tree.branch(event:)
+
+      expect(watcher.branched).to eq([event])
+    end
+  end
 end
