@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module Low
-  EVENT_VERSION = '0.8.10'
+  EVENT_VERSION = '0.8.11'
 end
