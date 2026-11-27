@@ -22,6 +22,7 @@ module Low
         @event_trees = Support::PoolHash.new(BUFFER_SIZE)
         @kept_apart_trees = Support::PoolHash.new(KEPT_APART_SIZE)
         @request_counts = Support::PoolHash.new(BUFFER_SIZE)
+        @request_ids = Support::PoolHash.new(BUFFER_SIZE) # Each fiber's current request ID, made once for all its events.
         @kept_apart = nil
       end
 
@@ -46,8 +47,7 @@ module Low
 
       # The tree of what's happening now on this fiber like the request being answered without starting one.
       def event_tree_now
-        fiber_id = Fiber.current.object_id
-        find_event_tree("#{fiber_id}-#{@request_counts[fiber_id]}")
+        find_event_tree(current_request_id(Fiber.current.object_id))
       end
 
       private
@@ -63,12 +63,18 @@ module Low
       def request_id(event:)
         fiber_id = Fiber.current.object_id
         increment_request_counts(fiber_id:) if event.starts_event_tree?
-        "#{fiber_id}-#{@request_counts[fiber_id]}"
+        current_request_id(fiber_id)
       end
 
+      def current_request_id(fiber_id)
+        @request_ids[fiber_id] || "#{fiber_id}-#{@request_counts[fiber_id]}"
+      end
+
+      # Added rather than set, so only the last fibers' counts are kept, as each connection can have a fiber of its own.
       def increment_request_counts(fiber_id:)
-        @request_counts[fiber_id] ||= 0
-        @request_counts[fiber_id] += 1
+        count = (@request_counts[fiber_id] || 0) + 1
+        @request_counts.add(fiber_id, count)
+        @request_ids.add(fiber_id, "#{fiber_id}-#{count}".freeze)
       end
     end
   end

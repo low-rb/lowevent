@@ -23,12 +23,15 @@ module Low
     include Support::ValueObject
 
     attr_reader :key, :action, :actions, :return_action, :created_at, :finished_at
-    attr_accessor :children
+    attr_writer :children
+
+    # Shared by every event without actions of its own, as an event's actions are only read.
+    NO_ACTIONS = [].freeze
 
     # Subclass provides a key such as "self.class".
     # Subclass defines default action or actions, but not both.
     # A return action, like :response, is called on each observer a take passed, with what it took, on its way back out.
-    def initialize(key:, action: nil, actions: [], return_action: nil, children: [])
+    def initialize(key:, action: nil, actions: NO_ACTIONS, return_action: nil, children: nil)
       @key = key
       @action = action
       @actions = actions
@@ -37,6 +40,11 @@ module Low
 
       @created_at = clock
       @finished_at = nil
+    end
+
+    # Made when the first event goes under this one, as most events have none.
+    def children
+      @children ||= []
     end
 
     def trigger

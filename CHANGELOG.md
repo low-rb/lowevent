@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Minor features that don't break backwards compatibility are released as patches.
 
 
+## Unreleased
+
+### Changed
+
+- Each request's ID is made once, rather than for every event in it
+- An event's actions and children aren't made until they're needed, as most events have none
+
+### Fixed
+
+- Request counts only keep the last fibers, like the event trees do. One was kept for every fiber that ever served a request
+
 ## 0.8.10
 
 ### Added
